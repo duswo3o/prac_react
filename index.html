@@ -11,7 +11,9 @@
     function App() {
       const [counter, setCounter] = React.useState(0);
       const onClick = () => {
-        setCounter(counter + 1);
+        // setCounter(counter + 1);
+        // 첫 번째 argument는 현재 값, 함수의 return 값이 새로운 state가 됨
+        setCounter((currnet) => currnent + 1);
       };
       return (
         <div>
