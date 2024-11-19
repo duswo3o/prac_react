@@ -50,10 +50,49 @@
       );
     }
     function KmToMiles() {
-      return <h3>Km 2 Miles</h3>;
+      const [distance, setDistance] = React.useState("");
+      const [convert, setConvert] = React.useState(false);
+      const onChange = (event) => {
+        setDistance(event.target.value);
+      };
+      const distConvert = () => {
+        setConvert((current) => !current);
+        reset();
+      };
+      const reset = () => setDistance("");
+      return (
+        <div>
+          <div>
+            <label htmlFor="km">Km</label>
+            <input
+              value={convert ? distance / 1.60934 : distance}
+              id="km"
+              type="number"
+              placeholder="Km"
+              onChange={onChange}
+              disabled={convert}
+            />
+          </div>
+          <div>
+            <label htmlfor="miles">Miles</label>
+            <input
+              value={convert ? distance : distance * 1.60934}
+              id="miles"
+              type="number"
+              placeholder="Miles"
+              onChange={onChange}
+              disabled={!convert}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={distConvert}>
+            {convert ? "Miles to Km" : "Km to Miles"}
+          </button>
+        </div>
+      );
     }
     function App() {
-      const [index, setIndex] = React.useState("0");
+      const [index, setIndex] = React.useState("default");
       const onSelect = (event) => {
         setIndex(event.target.value);
       };
@@ -61,10 +100,12 @@
         <div>
           <h1 className="hi">Super Converter</h1>
           <select onChange={onSelect} value={index}>
+            <option value="default">select converter</option>
             <option value="0">Minutes & Hours</option>
             <option value="1">Km & Miles</option>
           </select>
           <hr />
+          {index === "default" ? "Select Converter" : null}
           {index === "0" ? <MinutesToHours /> : null}
           {index === "1" ? <KmToMiles /> : null}
         </div>
